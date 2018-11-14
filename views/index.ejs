@@ -9,16 +9,11 @@
     }
   </style>
   <body>
-    <form id="searchForm">
-      <input name="query" id="searchInput" type="text">
-      <button type="submit">Search Query</button>
-      <h1 id="text">result</h1>
-    </form>
     <h1>Yerevan</h1>
     <div id="map"></div>
     <script>
         function initMap() {
-            let geoLoc = { lat: 40.183333, lng: 44.516666999999984};
+            let geoLoc = { lat: 40.177200, lng: 44.503490};
             let options = {
                 zoom: 12,
                 center: geoLoc
@@ -36,17 +31,8 @@
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <script>
       $(function () {
-        $('#searchForm').submit(() => {
-            const query = $(this).find('input[name="query"]').val();
-            $.post('/search', { query: "Yerevan" }, function (data) {
-                data.post.map(val => {
-                    const value = val.text;
-                    $( "#text" ).append(value) ;
-                });
-                $("#text").append("<hr>");
-                console.log(data.post)
-            });
-            return false;
+        $.post('/search', function (data) {
+            console.log(data.post)
         });
       });
     </script>

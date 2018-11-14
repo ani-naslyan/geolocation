@@ -23,14 +23,9 @@ app.get('/', (req, res) => {
 });
 
 app.post('/search', (req, res) => {
-  const query = req.body.query;
-  console.log(query, "query");
+  const query = "";
   twitter.query(query, val => {
-    if (val) {
         res.json({ post:  val });
-    } else {
-        res.json({ post: 'No such post!' });
-    }
   });
 });
 
