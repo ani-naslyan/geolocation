@@ -1,1 +1,1 @@
-# geolocation
+# geolocation coding workshop
