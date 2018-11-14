@@ -12,9 +12,9 @@ const T = new twit({
 
 module.exports = {
     query(query, callback) {
-        const params = { q: `${query} since:2016-03-11`, count: 1000 };
+        const params = { q: `${query} since:2016-03-11`, count: 1000 };//geocode:40.183333,44.516666999999984,50km
 
-        T.get(`search/tweets`, params, function(err, data) {
+        T.get("search/tweets", params, function(err, data) {
             if (err) {
                 console.log('ERROR: ', err);
                 callback(null);
