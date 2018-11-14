@@ -1,0 +1,30 @@
+<html>
+  <head>
+    <title>Post</title>
+  </head>
+  <body>
+    <form id="searchForm">
+      <input name="query" id="searchInput" type="text">
+      <button type="submit">Search Query</button>
+      <h1 id="text">result</h1>
+    </form>
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script>
+      $(function () {
+        $('#searchForm').submit(() => {
+            const query = $(this).find('input[name="query"]').val();
+            $.post('/search', { query: query }, function (data) {
+                data.post.map(val => {
+                    const value = val.text;
+                    $( "#text" ).append(value) ;
+                });
+                $("#text").append("<hr>");
+                
+                console.log(data.post)
+            });
+            return false;
+        });
+      });
+    </script>
+  </body>
+</html>
