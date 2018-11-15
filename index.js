@@ -3,10 +3,8 @@ const bodyParser = require('body-parser');
 const twitter = require('./twitter');
 
 const app = express();
-// parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
 
-// parse application/json
 app.use(bodyParser.json());
 
 const port = 3001;
@@ -23,7 +21,7 @@ app.get('/', (req, res) => {
 });
 
 app.post('/search', (req, res) => {
-  const query = "";
+  const query = req.body.query;
   twitter.query(query, val => {
         res.json({ post:  val });
   });
