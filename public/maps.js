@@ -60,5 +60,6 @@ function initAutoComplete(map) {
             }
         });
         map.fitBounds(bounds);
+        // return places
     });
 }
