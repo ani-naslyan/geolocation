@@ -1,10 +1,9 @@
-var map;
+let map;
 
 function initMap() {
     map = new google.maps.Map(document.getElementById("map"), {
         center: {lat: 40.1533693, lng: 44.4185276},
         zoom: 15,
-        mapTypeId: "roadmap"
     });
 
     initAutoComplete(map);
@@ -17,15 +16,13 @@ function initMap() {
 }
 
 function placeMarker(location) {
-    let marker = new google.maps.Marker({
+    return new google.maps.Marker({
         position: location,
+        map: map,
         icon: {
             url: "https://fountainhillcenter.org/wp-content/uploads/twitter.png",
             scaledSize: new google.maps.Size(40, 40),
-            size: new google.maps.Size(71, 71),
-
-        },
-        map: map
+        }
     });
 }
 
