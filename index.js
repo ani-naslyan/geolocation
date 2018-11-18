@@ -1,30 +1,25 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const twitter = require('./twitter');
+const twit = require('./public/twitter');
 
 const app = express();
-app.use(bodyParser.urlencoded({ extended: false }));
-
-app.use(bodyParser.json());
-
-const port = 3001;
 
 app.set('view engine', 'ejs');
+const port = 3000;
 
-app.use((req, res, next) => { // middleware
-  req.chanj = "Some text";
-  next();
-});
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
+app.use(express.static('public'));
 
 app.get('/', (req, res) => {
-  res.render('index');
+    res.render('index', {});
 });
 
-app.post('/search', (req, res) => {
-  const query = req.body.query;
-  twitter.query(query, val => {
-        res.json({ post:  val });
-  });
+app.post('/s', (req, res) => {
+    const k = req.body.k;
+    twit.search(k, statuses => {
+        res.json({search: statuses});
+    });
 });
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+app.listen(port, () => console.log(`Twitter app listening on port ${port}!`));

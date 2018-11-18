@@ -12,31 +12,31 @@ const T = new Twit({
 const OldStatuses = {}; // KEY: query, Value: [statuses]
 
 const searchTweet = (query, callback) => {
-    // T.get('search/tweets', {q: `${query} since:2018-07-11`, count: 1000}, (err, data, response) => {
-    //     if (err) {
-    //         console.log('ERROR: ', err);
-    //         return;
-    //     }
-    //     if (!(query in OldStatuses)) {
-    //         OldStatuses[query] = [];
-    //     }
-    //     for (let i = 0; i < data.statuses.length; i++) {
-    //         const newId = data.statuses[i].id;
-    //         let isEqual = false;
-    //         for (let j = 0; j < OldStatuses[query].length; j++) {
-    //             const oldId = OldStatuses[query][j].id;
-    //             if (oldId === newId) {
-    //                 isEqual = true;
-    //                 break;
-    //             }
-    //         }
-    //
-    //         if (!isEqual) {
-    //             OldStatuses[query] = data.statuses;
-    //             break;
-    //         }
-    //     }
-    // });
+    T.get('search/tweets', { q: `${query} since:2018-07-11`, count: 1000 }, (err, data, response)=> {
+        if (err) {
+            console.log('ERROR: ', err);
+            return;
+        }
+        if (!(query in OldStatuses)) {
+            OldStatuses[query] = [];
+        }
+        for (let i = 0; i < data.statuses.length; i++) {
+            const newId = data.statuses[i].id;
+            let isEqual = false;
+            for (let j = 0; j < OldStatuses[query].length; j++) {
+                const oldId = OldStatuses[query][j].id;
+                if (oldId === newId) {
+                    isEqual = true;
+                    break;
+                }
+            }
+
+            if (!isEqual) {
+                OldStatuses[query] = data.statuses;
+                break;
+            }
+        }
+    });
 };
 
 const queries = [];
@@ -58,7 +58,7 @@ setInterval(() => {
 }, 2000);
 
 module.exports = {
-    query(query, callback) {
+    search(query, callback) {
         if (queries.indexOf(query) === -1) {
             queries.unshift(query);
         }
