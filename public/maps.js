@@ -1,5 +1,19 @@
 let map;
 
+const marker = function placeMarker(location) {
+    console.log(location.lat(), "lat");
+    console.log(location.lng(), "long");
+
+    return new google.maps.Marker({
+        position: location,
+        map: map,
+        icon: {
+            url: "https://fountainhillcenter.org/wp-content/uploads/twitter.png",
+            scaledSize: new google.maps.Size(40, 40),
+        }
+    });
+};
+
 function initMap() {
     map = new google.maps.Map(document.getElementById("map"), {
         center: {lat: 40.1533693, lng: 44.4185276},
@@ -9,20 +23,9 @@ function initMap() {
     initAutoComplete(map);
 
     google.maps.event.addListener(map, "click", function (event) {
-        placeMarker(event.latLng);
+        marker(event.latLng);
         console.log(event.latLng.lat(), "latPoint");
         console.log(event.latLng.lng(), "lngPoint");
-    });
-}
-
-function placeMarker(location) {
-    return new google.maps.Marker({
-        position: location,
-        map: map,
-        icon: {
-            url: "https://fountainhillcenter.org/wp-content/uploads/twitter.png",
-            scaledSize: new google.maps.Size(40, 40),
-        }
     });
 }
 
@@ -50,16 +53,16 @@ function initAutoComplete(map) {
                 return;
             }
 
-            placeMarker(place.geometry.location);
+            marker(place.geometry.location);
 
             if (place.geometry.viewport) {
-                // Only geocodes have viewport.
                 bounds.union(place.geometry.viewport);
             } else {
                 bounds.extend(place.geometry.location);
             }
         });
         map.fitBounds(bounds);
-        // return places
     });
 }
+
+module.exports = marker;

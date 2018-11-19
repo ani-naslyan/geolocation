@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const twit = require('./public/twitter');
+const map = require("./public/maps");
 
 const app = express();
 
@@ -20,13 +21,7 @@ app.post('/s', (req, res) => {
     twit.search(k, statuses => {
         res.json({ search: statuses });
     });
+    console.log(map, "map");
 });
-
-// app.post('/map', (req, res) => {
-//     const query = req.body.query;
-//     twit.(query, statuses => {
-//         res.json({search: statuses});
-//     });
-// });
 
 app.listen(port, () => console.log(`Twitter app listening on port ${port}!`));
